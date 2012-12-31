@@ -111,9 +111,7 @@ var wordclock = function(element, options) {
             }
             
             this.element = element;
-            this.date = this.options.date || new Date();
             
-            this.draw();
             return this.start();
         },
         
@@ -157,45 +155,48 @@ var wordclock = function(element, options) {
         
         update: function() {
             
-            var dateHours = this.date.getHours();
-            var dateMinutes = this.date.getMinutes();
+            this.draw();
+            
+            this.date = this.options.date || new Date();
+            
+            var hours = this.date.getHours();
+            var minutes = this.date.getMinutes();
             var infix;
             
-            if(dateHours >= 12) {
-                dateHours -= 12;
+            if(hours >= 12) {
+                hours -= 12;
             }
             
             this.highlight('it');
             this.highlight('is');
             
-            if(dateMinutes <= 30) {
+            if(minutes <= 30) {
                 infix = 'past';
             } else {
                 infix = 'to';
-                dateMinutes = 60 - dateMinutes;
-                dateHours++;
+                minutes = 60 - minutes;
+                hours++;
             }
             
-            if(dateMinutes < 2) {
+            if(minutes < 2) {
                 this.highlight('oclock');
-            } else if(dateMinutes < 8) {
+            } else if(minutes < 8) {
                 this.highlight('minutes_five');
-                this.highlight(infix);
-            } else if(dateMinutes < 13) {
+            } else if(minutes < 13) {
                 this.highlight('minutes_ten');
-                this.highlight(infix);
-            } else if(dateMinutes < 18) {
+            } else if(minutes < 18) {
                 this.highlight('minutes_quarter');
-                this.highlight(infix);
-            } else if(dateMinutes < 25) {
+            } else if(minutes < 25) {
                 this.highlight('minutes_twenty');
-                this.highlight(infix);
-            } else if(dateMinutes < 31) {
+            } else if(minutes < 31) {
                 this.highlight('minutes_half');
+            }
+            
+            if(minutes >= 2) {
                 this.highlight(infix);
             }
             
-            this.highlight('hours_' + this.hours[dateHours]);
+            this.highlight('hours_' + this.hours[hours]);
         }
     };
     
