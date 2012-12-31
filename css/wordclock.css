@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+
+body {
+    background-color: #000;
+    font-size: 20px;
+}
+
+div#clock {
+    margin: auto;
+    margin-top: 100px;
+    width: 310px;
+    border: 1px solid #333;
+    padding: 5px;
+}
+
+div.row {
+    clear: both;
+}
+div.row div {
+    background-color: #000;
+    float: left;
+    width: 24px;
+    text-align: center;
+    padding: 2px;
+}
+
+div.row div.active {
+    color: #aaa;
+}
