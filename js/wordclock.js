@@ -105,6 +105,11 @@ var wordclock = function(element, options) {
             'hours_twelve' : [ [8, 5], [8, 6], [8, 7], [8, 8], [8, 9], [8, 10] ],
         },
         
+        /**
+         * Reads the configuration, starts the clock
+         * @param HTMLElement element
+         * @param object options
+         */
         init: function(element, options) {
             for(var opt in options) {
                 this.options[opt] = options[opt];
@@ -115,6 +120,9 @@ var wordclock = function(element, options) {
             return this.start();
         },
         
+        /**
+         * Starts the clock, registers its refresh interval
+         */
         start: function() {
             this.interval = window.setInterval((function(scope) {
                 return function(){
@@ -122,14 +130,22 @@ var wordclock = function(element, options) {
                 };
             })(this), this.options.interval);
             
-            return this.update();
+            this.update();
         },
         
+        /**
+         * Stops the clock and unregisters interval 
+         */
         stop: function() {
             window.clearInterval(this.interval);
             return this;
         },
         
+        /**
+         * This method is responsible for highlighting given words
+         * on the clock by adding appropriate class name to elements.
+         * @param array words 
+         */
         highlight: function(words) {
             var self = this;
             $.each(words, function(key, word) {
@@ -141,6 +157,9 @@ var wordclock = function(element, options) {
             });
         },
         
+        /**
+         * Draws an empty clock with letters on it.
+         */
         draw: function() {
             var self = this;
             $(this.element).empty();
@@ -155,6 +174,10 @@ var wordclock = function(element, options) {
             $(this.element).append('<div style="clear: both;"></div>');
         },
         
+        /**
+         * Updates the clock by highlighting appropriate words on it.
+         * This method is called by previously registered interval function.
+         */
         update: function() {
             
             this.draw();
@@ -205,6 +228,9 @@ var wordclock = function(element, options) {
     return wordclock.init(element, options)
 }
 
+/**
+ * Register as a jQuery plugin named "wordclock"
+ */
 if('undefined' != typeof jQuery) {
     jQuery.fn.wordclock= function(options) {
         return this.each(function() {
