@@ -3,7 +3,7 @@ wordclock
 
 Word Clock inspired by http://qlocktwo.com
 
-This is jQuery plugin to display a fancy clock like the one ad http://qlocktwo.com.
+This is jQuery plugin to display a fancy clock like the one at http://qlocktwo.com.
 
 Usage
 =====
