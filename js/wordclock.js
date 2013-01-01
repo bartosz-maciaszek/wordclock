@@ -130,12 +130,15 @@ var wordclock = function(element, options) {
             return this;
         },
         
-        highlight: function(word) {
-            if(typeof this.wordMap[word] != undefined) {
-                $.each(this.wordMap[word], function(key, item) {
-                    $('div.row div[x="' + item[0] + '"][y="' + item[1] + '"]').addClass('active');
-                });
-            }
+        highlight: function(words) {
+            var self = this;
+            $.each(words, function(key, word) {
+                if(typeof self.wordMap[word] != undefined) {
+                    $.each(self.wordMap[word], function(key, coords) {
+                        $('div.row div[x="' + coords[0] + '"][y="' + coords[1] + '"]').addClass('active');
+                    });
+                }
+            });
         },
         
         draw: function() {
@@ -144,7 +147,6 @@ var wordclock = function(element, options) {
             $.each(this.letters, function(x, letterRow) {
                 var row = $('<div class="row" />');
                 $.each(letterRow, function(y, letter) {
-                    console.log(letter);
                     row.append($('<div>').attr('x', x).attr('y', y).html(letter));
                 });
                 $(self.element).append(row);
@@ -167,36 +169,36 @@ var wordclock = function(element, options) {
                 hours -= 12;
             }
             
-            this.highlight('it');
-            this.highlight('is');
-            
-            if(minutes <= 30) {
-                infix = 'past';
-            } else {
-                infix = 'to';
-                minutes = 60 - minutes;
+            if(minutes > 30) {
                 hours++;
             }
+
+            this.highlight([ 'it', 'is' ]);
+            this.highlight([ 'hours_' + this.hours[hours] ]);
             
             if(minutes < 2) {
-                this.highlight('oclock');
+                this.highlight([ 'oclock' ]);
             } else if(minutes < 8) {
-                this.highlight('minutes_five');
+                this.highlight([ 'minutes_five', 'past' ]);
             } else if(minutes < 13) {
-                this.highlight('minutes_ten');
+                this.highlight([ 'minutes_ten', 'past' ]);
             } else if(minutes < 18) {
-                this.highlight('minutes_quarter');
+                this.highlight([ 'minutes_quarter', 'past' ]);
             } else if(minutes < 25) {
-                this.highlight('minutes_twenty');
-            } else if(minutes < 31) {
-                this.highlight('minutes_half');
+                this.highlight([ 'minutes_twenty', 'past' ]);
+            } else if(minutes < 35) {
+                this.highlight([ 'minutes_half', 'past' ]);
+            } else if(minutes < 43) {
+                this.highlight([ 'minutes_twenty', 'to' ]);
+            } else if(minutes < 48) {
+                this.highlight([ 'minutes_quarter', 'to' ]);
+            } else if(minutes < 53) {
+                this.highlight([ 'minutes_ten', 'to' ]);
+            } else if(minutes < 58) {
+                this.highlight([ 'minutes_five', 'to' ]);
+            } else {
+                this.highlight([ 'oclock' ]);
             }
-            
-            if(minutes >= 2) {
-                this.highlight(infix);
-            }
-            
-            this.highlight('hours_' + this.hours[hours]);
         }
     };
     
