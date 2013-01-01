@@ -169,7 +169,7 @@ var wordclock = function(element, options) {
                 hours -= 12;
             }
             
-            if(minutes > 30) {
+            if(minutes >= 35) {
                 hours++;
             }
 
