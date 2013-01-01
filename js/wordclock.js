@@ -180,22 +180,46 @@ var wordclock = function(element, options) {
          */
         update: function() {
             
+            /**
+             * Redraw the clock
+             */
             this.draw();
             
+            /**
+             * Get the date
+             */
             this.date = this.options.date || new Date();
             
+            /**
+             * Get hours and minutes
+             */
             var hours = this.date.getHours();
             var minutes = this.date.getMinutes();
-            var infix;
             
+            /**
+             * Set hours to 12-hours time
+             */
             if(hours >= 12) {
                 hours -= 12;
             }
             
+            /**
+             * Highlight letters on the clock
+             */
+            this.drawTime(hours, minutes);
+        },
+        
+        /**
+         * Highlight specific hour and minute on the clock
+         * @param int hours
+         * @paran int minutes
+         */
+        drawTime: function(hours, minutes) {
+            
             if(minutes >= 35) {
                 hours++;
             }
-
+            
             this.highlight([ 'it', 'is' ]);
             this.highlight([ 'hours_' + this.hours[hours] ]);
             
